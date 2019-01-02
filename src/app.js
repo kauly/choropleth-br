@@ -22,7 +22,7 @@ class App extends Component {
       height: "100%",
       latitude: -13.796818,
       longitude: -38.190109,
-      zoom: 3.8
+      zoom: 3.2
     },
     data: null,
     lngLat: null
