@@ -32,7 +32,6 @@ class App extends Component {
     const { features, lngLat } = e;
     const hoveredFeature = features && features.find(f => f.layer.id === 'statedata')
     hoveredFeature && this.setState({data: hoveredFeature.properties, lngLat})
-    console.log(hoveredFeature)
   }
 
   render() {
