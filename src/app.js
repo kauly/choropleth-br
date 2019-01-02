@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import ReactMapGL from 'react-map-gl'
-import WebMercatorViewport from 'viewport-mercator-project'
+import Info from './info'
+// import WebMercatorViewport from 'viewport-mercator-project'
 import 'mapbox-gl/dist/mapbox-gl.css'
 
 import Legendas from './legendas'
@@ -22,8 +23,17 @@ class App extends Component {
       latitude: -13.796818,
       longitude: -38.190109,
       zoom: 3.8
-    }
+    },
+    data: null,
+    lngLat: null
   };
+
+  _onHover = e => {
+    const { features, lngLat } = e;
+    const hoveredFeature = features && features.find(f => f.layer.id === 'statedata')
+    hoveredFeature && this.setState({data: hoveredFeature.properties, lngLat})
+    console.log(hoveredFeature)
+  }
 
   render() {
     return (
@@ -32,8 +42,10 @@ class App extends Component {
           mapStyle={process.env.REACT_APP_MAPBOX_STYLE_URL} 
           mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN} 
           {...this.state.viewport}
-          onViewportChange={(viewport) => this.setState({viewport})} 
-        >
+          onViewportChange={(viewport) => this.setState({viewport})}
+          onHover={this._onHover} 
+        > 
+          <Info data={this.state.data}/>
           <Legendas />
         </ReactMapGL>
       </Container>
